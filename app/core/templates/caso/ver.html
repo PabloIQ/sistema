@@ -1,0 +1,56 @@
+{% extends 'layout/layout.html' %}
+
+
+{% block contenido %}
+    <h1>Ver Casos</h1>
+    <table class="table">
+        <thead class="table-dark">
+            <tr>
+                <th>Cliente</th>
+                <th>Teléfono</th>
+                <th>Dirección</th>
+                <th>Estado caso</th>
+                <th>Fecha recibida</th>
+                <th>Fecha entregada</th>
+                <th>Monto</th>
+                <th>Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for items in caso %}
+                <tr>
+                    <td>{{items.nombre_cliente}}</td>
+                    <td>{{items.telefono_cliente}}</td>
+                    <td>{{items.direccion_cliente}}</td>
+                    <td>
+                        <select name="">
+                            {% if items.estado_caso == 'Creado' %}
+                                <option value="Creado" selected>Creado</option>
+                                <option value="En proceso">En proceso</option>
+                                <option value="Terminado">Terminado</option>
+                            {% elif items.estado_caso == 'En proceso' %}
+                                <option value="Creado">Creado</option>
+                                <option value="En proceso" selected>En proceso</option>
+                                <option value="Terminado">Terminado</option>
+                            {% else %}
+                                <option value="Creado">Creado</option>
+                                <option value="En proceso">En proceso</option>
+                                <option value="Terminado" selected>Terminado</option>
+                            {% endif %}
+                        </select>
+                    </td>
+                    <td>{{items.fecha_recibido|escape}}</td>
+                    <td><input type="date" value="{{items.fecha_entregado|escape}}"></td>
+                    <td>
+                        <input type="text" value="{{items.monto}}">
+                    </td>
+                    <td>
+                        <button onclick="info('{{ items.id }}')" type="button" class="btn btn-info">Info</button>
+                        <button type="button" class="btn btn-success">Guardar</button>
+                        <button type="button" class="btn btn-danger">Eliminar</button>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+{% endblock %}

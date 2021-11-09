@@ -1,0 +1,84 @@
+{% extends 'layout/layout.html' %}
+
+{% block contenido %}
+{% include 'message/messages.html' %}
+    <h1>Nuevo caso</h1>
+    <form method="post">
+      {% csrf_token %}
+        <div class="mb-3">
+          <label for="descripcion" class="form-label">Descripción:</label>
+          <input required name="descripcion" type="text" class="form-control" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+          <label for="tipo_dispositivo" class="form-label">Tipo de dispositivo:</label>
+          <select required class="form-control" name="tipo_dispositivo">
+              <option value="">-----Eliga una opción-----</option>
+              {% for items in dispositivo %}
+                <option value="{{items.id}}">{{ items.nombre }}</option>
+              {% endfor %}
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="marca" class="form-label">Marca:</label>
+          <select required class="form-control" name="marca">
+              <option value="">-----Eliga una opción-----</option>
+              {% for items in marca %}
+                <option value="{{items.id}}">{{ items.nombre }}</option>
+              {% endfor %}
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="modelo" class="form-label">Modelo:</label>
+          <select required class="form-control" name="modelo">
+              <option value="">-----Eliga una opción-----</option>
+              {% for items in modelo %}
+                <option value="{{items.id}}">{{ items.nombre }}</option>
+              {% endfor %}
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="tipo_caso" class="form-label">Tipo de caso:</label>
+          <select required class="form-control" name="tipo_caso">
+              <option value="">-----Eliga una opción-----</option>
+              {% for items in caso_tipo %}
+                <option value="{{items.id}}">{{ items.nombre }}</option>
+              {% endfor %}
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="cliente" class="form-label">Nombre del cliente:</label>
+          <input required name="cliente" type="text" class="form-control" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+          <label for="telefono" class="form-label">Teléfono del cliente:</label>
+          <input required name="telefono" type="text" class="form-control" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+          <label for="direccion" class="form-label">Dirección del cliente:</label>
+          <input required name="direccion" type="text" class="form-control" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+          <label for="estado" class="form-label">Estado del caso:</label>
+          <select required class="form-control" name="estado">
+              <option value="">-----Eliga una opción-----</option>
+              <option value="Creado">Creado</option>
+              <option value="En proceso">En proceso</option>
+              <option value="Terminado">Terminado</option>
+          </select>
+        </div>
+        <div class="mb-3">
+            <label for="recibido" class="form-label">Fecha recibida:</label>
+            <input required name="recibido" type="date" class="form-control" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+            <label for="entregado" class="form-label">Fecha entregada:</label>
+            <input required name="entregado" type="date" class="form-control" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+            <label for="monto" class="form-label">Monto:</label>
+            <input required name="monto" type="text" class="form-control" aria-describedby="emailHelp">
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Crear</button>
+      </form>
+{% endblock %}

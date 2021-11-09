@@ -23,4 +23,10 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.Index, name='index'),
+    path('crear-caso/', views.CrearCaso, name='crear_caso'),
+    path('crear-tipo-caso/', views.CrearTipoCaso, name='crear_tipo_caso'),
+    path('crear-tipo-dispositivo/', views.CrearTipoDispositivo, name='crear_tipo_dispositivo'),
+    path('crear-marca/', views.CrearMarca, name='crear_marca'),
+    path('crear-modelo/', views.CrearModelo, name='crear_modelo'),
+    path('caso-detalle/<id>', views.CasoDetalle, name='caso_detalle'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

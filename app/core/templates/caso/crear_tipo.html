@@ -1,0 +1,15 @@
+{% extends 'layout/layout.html' %}
+
+{% block contenido %}
+{% include 'message/messages.html' %}
+    <h1>Nuevo tipo de caso</h1>
+    <form method="post">
+      {% csrf_token %}
+        <div class="mb-3">
+          <label for="nombre" class="form-label">Nombre:</label>
+          <input required name="nombre" type="text" class="form-control" aria-describedby="emailHelp">
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Crear</button>
+      </form>
+{% endblock %}
