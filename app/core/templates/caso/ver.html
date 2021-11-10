@@ -2,6 +2,7 @@
 
 
 {% block contenido %}
+{% include 'message/messages.html' %}
     <h1>Ver Casos</h1>
     <table class="table">
         <thead class="table-dark">
@@ -23,7 +24,7 @@
                     <td>{{items.telefono_cliente}}</td>
                     <td>{{items.direccion_cliente}}</td>
                     <td>
-                        <select name="">
+                        <select id="estado{{items.id}}">
                             {% if items.estado_caso == 'Creado' %}
                                 <option value="Creado" selected>Creado</option>
                                 <option value="En proceso">En proceso</option>
@@ -40,14 +41,14 @@
                         </select>
                     </td>
                     <td>{{items.fecha_recibido|escape}}</td>
-                    <td><input type="date" value="{{items.fecha_entregado|escape}}"></td>
+                    <td><input id="fecha{{items.id}}" type="date" value="{{items.fecha_entregado|escape}}"></td>
                     <td>
-                        <input type="text" value="{{items.monto}}">
+                        <input id="monto{{items.id}}" type="text" value="{{items.monto}}">
                     </td>
                     <td>
                         <button onclick="info('{{ items.id }}')" type="button" class="btn btn-info">Info</button>
-                        <button type="button" class="btn btn-success">Guardar</button>
-                        <button type="button" class="btn btn-danger">Eliminar</button>
+                        <button onclick="Guardar('{{ items.id }}')" type="button" class="btn btn-success">Guardar</button>
+                        <button onclick="Eliminar('{{ items.id }}')" type="button" class="btn btn-danger">Eliminar</button>
                     </td>
                 </tr>
             {% endfor %}

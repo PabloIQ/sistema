@@ -2,15 +2,19 @@ from django.http.response import JsonResponse
 from django.shortcuts import redirect, render
 from core.models import Modelo, Marca, TipoDispositivo, TipoCaso, Caso
 from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
+@login_required(login_url='login')
 def Index(request):
     caso = Caso.objects.all()
     return render(request, 'caso/ver.html', {
         'caso': caso
     })
 
+@login_required(login_url='login')
 def CrearCaso(request):
     dispositivo = TipoDispositivo.objects.values('id', 'nombre')
     marca_list = Marca.objects.values('id', 'nombre')
@@ -45,7 +49,7 @@ def CrearCaso(request):
             monto = monto
         )
         caso.save()
-
+        messages.success(request, 'Caso creada registrada correctamente')
     return render(request, 'caso/crear.html', {
         'dispositivo': dispositivo,
         'marca': marca_list,
@@ -53,6 +57,7 @@ def CrearCaso(request):
         'caso_tipo': caso_tipo
     })
 
+@login_required(login_url='login')
 def CasoDetalle(request, id):
     #lista = ['Mi texto']
     caso = Caso.objects.get(id=id)
@@ -67,6 +72,7 @@ def CasoDetalle(request, id):
         'caso': caso.id_tipo_caso.nombre
         })
 
+@login_required(login_url='login')
 def CrearTipoCaso(request):
     if request.method == 'POST':
         nombre = request.POST['nombre']
@@ -80,6 +86,7 @@ def CrearTipoCaso(request):
             messages.error(request, 'Hubo un error al crear el tipo de caso!!!!')
     return render(request, 'caso/crear_tipo.html')
 
+@login_required(login_url='login')
 def CrearTipoDispositivo(request):
     if request.method == 'POST':
         nombre = request.POST['nombre']
@@ -93,6 +100,7 @@ def CrearTipoDispositivo(request):
             messages.error(request, 'Hubo un error al crear el tipo de dispositivo!!')
     return render(request, 'dispositivo/crear_tipo.html')
 
+@login_required(login_url='login')
 def CrearMarca(request):
     if request.method == 'POST':
         nombre = request.POST['nombre']
@@ -106,6 +114,7 @@ def CrearMarca(request):
             messages.error(request, 'Hubo un error al crear la marca')
     return render(request, 'marca/crear.html')
 
+@login_required(login_url='login')
 def CrearModelo(request):
     if request.method == 'POST':
         nombre = request.POST['nombre']
@@ -118,3 +127,39 @@ def CrearModelo(request):
         except:
             messages.error(request, 'Hubo un error al crear el modelo')
     return render(request, 'modelo/crear.html')
+
+def Login(request):
+    if request.method == 'POST':
+        usuario = request.POST.get('usuario')
+        password = request.POST.get('password')
+
+        user = authenticate(request, username=usuario, password=password)
+        if user is not None:
+            login(request, user)
+            messages.success(request, f'Bienvenido {request.user}!!')
+            return redirect('index')
+        else:
+            messages.error(request, 'Usuario inválido, vuelve a intentarlo!!')
+
+    return render(request, 'login/login.html')
+
+def Logout(request):
+    user = request.user
+    logout(request)
+    messages.success(request, f'Vuelva pronto {user}!!!')
+    return redirect('login')    
+
+def Guardar(request, estado, fecha, monto, id):
+    caso = Caso.objects.get(id=id)
+    caso.estado_caso = estado
+    caso.fecha_entregado = fecha
+    caso.monto = monto
+    caso.save()
+    messages.success(request, 'Se aplicaron los cambios!')
+    return redirect('index')
+
+def Eliminar(request, id):
+    caso = Caso.objects.get(id=id)
+    caso.delete()
+    messages.success(request, 'Se eliminado un elemento en la lista!!')
+    return redirect('index')

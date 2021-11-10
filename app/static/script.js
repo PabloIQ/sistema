@@ -39,3 +39,15 @@ function info(id){
         }
     )
 }
+
+function Guardar(id){
+    estado = document.getElementById('estado'+id).value
+    fecha = document.getElementById('fecha'+id).value
+    monto = document.getElementById('monto'+id).value
+    //alert('ID: ' + id + 'Monto: ' + monto + 'Fecha: ' + fecha + 'Estado: ' + estado)
+    window.location = `/guardar/${estado}/${fecha}/${monto}/${id}`
+}
+
+function Eliminar(id){
+    window.location = `/eliminar/${id}`
+}
