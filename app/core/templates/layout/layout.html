@@ -16,13 +16,15 @@
 <body>
     <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{% url 'crear_caso' %}"><i class="far fa-plus-circle"></i> Crear Casos</a>
-            <a class="navbar-brand" href="{% url 'index' %}"><i class="fal fa-eye"></i> Ver Casos</a>
-            <a class="navbar-brand" href="{% url 'crear_tipo_caso' %}"><i class="far fa-plus-circle"></i> Crear Tipo de Caso</a>
-            <a class="navbar-brand" href="{% url 'crear_tipo_dispositivo' %}"><i class="far fa-plus-circle"></i> Crear Dispositivo</a>
-            <a class="navbar-brand" href="{% url 'crear_marca' %}"><i class="far fa-plus-circle"></i> Crear Marca</a>
-            <a class="navbar-brand" href="{% url 'crear_modelo' %}"><i class="far fa-plus-circle"></i> Crear Modelo</a>
-            <a class="navbar-brand" href="{% url 'logout' %}"><i class="fal fa-user"></i> Cerrar Sesión</a>
+            {% if user.is_authenticated %}
+                <a class="navbar-brand" href="{% url 'crear_caso' %}"><i class="far fa-plus-circle"></i> Crear Casos</a>
+                <a class="navbar-brand" href="{% url 'index' %}"><i class="fal fa-eye"></i> Ver Casos</a>
+                <a class="navbar-brand" href="{% url 'crear_tipo_caso' %}"><i class="far fa-plus-circle"></i> Crear Tipo de Caso</a>
+                <a class="navbar-brand" href="{% url 'crear_tipo_dispositivo' %}"><i class="far fa-plus-circle"></i> Crear Dispositivo</a>
+                <a class="navbar-brand" href="{% url 'crear_marca' %}"><i class="far fa-plus-circle"></i> Crear Marca</a>
+                <a class="navbar-brand" href="{% url 'crear_modelo' %}"><i class="far fa-plus-circle"></i> Crear Modelo</a>
+                <a class="navbar-brand" href="{% url 'logout' %}"><i class="fal fa-user"></i> Cerrar Sesión</a>
+            {% endif %}
         </div>
     </nav>
     <div class="contenido">
